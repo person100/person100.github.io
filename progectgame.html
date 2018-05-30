@@ -1,0 +1,311 @@
+<html>
+   <head>
+  	<title>game thing</title>
+  	<style>
+   body{background:rgb(20,20,122)}
+   .l{float:right; border-style: solid black 3px;height:150px; width:40%; background-color:rgb(50,50,200);margin: 10px 10px 10px 30px;text-align:center}
+   </style>
+   </head>
+   <body>
+   <div class = "l">
+   <p>Play The Game And Win</p>
+      <p><button onClick = 'doLoop()'>PLAY!</button><p>
+      
+      <p>Dont Touch The Jellyfish<p>
+      </div>
+   <canvas id = "gameCanvas" width = 400 height = 800></canvas>
+   <script>
+   var x = 200;
+   var canvas;
+   var framerate = 100000;
+   var canvasContext;
+   var q = 10;
+   var v = 0;
+   var a = 150;
+   var b = 0;
+   var aa = 100;
+   var a1 = 50;
+    var b1 = 0;
+     var bb = 0;
+    var playerScore = 0;
+    var highScore = 0;
+    var yourScore = 0;
+    var radius = 10;
+    var m = 1;
+    
+    
+   	function calculateMousePos(evt) {
+	var rect = canvas.getBoundingClientRect();
+	var roots = document.documentElement;
+	var mouseX = evt.clientX - rect.left - roots.scrollLeft;
+	var mouseY = evt.clientY - rect.top - roots.scrollTop;
+	return{
+	x : mouseX,
+	y : mouseY
+	};
+	}
+   
+window.onload = function(){
+canvas = document.getElementById('gameCanvas');
+canvasContext = canvas.getContext("2d");
+}
+function doLoop() {
+
+if (m < 2){
+setInterval(callEverything,100/framerate);
+m++;
+
+
+canvas.addEventListener('mousemove',
+function(evt){
+var mousePos = calculateMousePos(evt);
+x = mousePos.x;
+});
+
+function resetGame(){
+bb = 0;
+b = 0;
+b1 = 0;
+v = 0;
+aa = 100;
+a = 150;
+a1 = 50;
+q = 10;
+if (playerScore >= highScore){
+highScore = playerScore;
+}
+yourScore = playerScore;
+playerScore = 0;
+
+
+}
+
+
+function computerMovement(){
+var w = q +5;
+if(w < x - 10){
+q = q +1;
+} else if (w > x + 10){
+q = q -1;
+}
+}
+
+function computerMovement2(){
+var w = a +5;
+if(w < x - 10){
+a = a +.7;
+} else if (w > x + 10){
+a = a -.7;
+}
+}
+
+function computerMovement3(){
+var w = aa +5;
+if(w < x - 10){
+aa = aa +2;
+} else if (w > x + 10){
+aa = aa -2;
+}
+}
+
+function computerMovement4(){
+var w = a1 +5;
+if(w < x - 10){
+a1 = a1 +.5;
+} else if (w > x + 10){
+a1 = a1 -.5;
+}
+}
+
+x = calculateMousePos;
+
+if (v < 400){
+v = 100
+}
+
+
+
+function callEverything(){
+
+if (x > 0){
+v = v +1;
+if (v > 800){
+v = 100
+playerScore =playerScore + 1;
+}
+
+if (v < 410 && v > 390){
+if (q < x + 20 && q > x -20){
+resetGame()
+}}
+
+b = b + .5;
+if (b > 800){
+b = 100
+playerScore = playerScore + 1;
+}
+
+if (b < 410 && b > 390){
+if (a < x + 20 && a > x - 20){
+resetGame()
+}}
+
+b1 = b1 + 2;
+if (b1 > 800){
+b1 = 100
+playerScore = playerScore + 1;
+}
+
+if (b1 < 410 && b1 > 390){
+if (a1 < x + 20 && a1 > x -20){
+resetGame()
+}}
+
+bb = bb + .7;
+if (bb > 800){
+bb = 100
+playerScore = playerScore + 1;
+}
+
+if (bb < 410 && bb > 390){
+if (aa < x + 20 && aa > x -20){
+resetGame()
+
+}}}
+
+
+computerMovement3()
+computerMovement4()
+computerMovement2()
+computerMovement();
+canvasContext.fillStyle='darkblue';
+canvasContext.fillRect(0,0,canvas.width,canvas.height);
+//canvasContext.fillStyle='red';
+//canvasContext.fillRect(x,400,20,20);
+//canvasContext.fillStyle='red';
+//canvasContext.fillRect(q,v,20,20);
+//canvasContext.fillStyle='red';
+//canvasContext.fillRect(a1,b1,20,20);
+//canvasContext.fillStyle='red';
+//canvasContext.fillRect(aa,bb,20,20);
+//canvasContext.fillStyle='red';
+//canvasContext.fillRect(a,b,20,20);
+canvasContext.fillStyle='red';
+canvasContext.beginPath();
+canvasContext.arc(x,400,radius,0,Math.PI*2,true);
+canvasContext.fill();
+
+
+canvasContext.fillStyle='white';
+canvasContext.fillRect(x- 5,400,25,2);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(x- 5,405,15,2);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(x- 5,395,15,2);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(x- 5,410,5,2);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(x- 5,390,5,2);
+
+canvasContext.fillStyle='black';
+canvasContext.beginPath();
+canvasContext.arc(x-3,395,radius-7,0,Math.PI*2,true);
+canvasContext.fill();
+
+
+canvasContext.fillStyle='white';
+canvasContext.fillRect(x + 15,400,15,2);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(x + 20,405,10,2);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(x + 20,395,10,2)
+canvasContext.fillRect(x + 25,410,5,2);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(x + 25,390,5,2)
+
+
+canvasContext.fillStyle='white';
+canvasContext.fillRect(x - 15,400,10,2)
+canvasContext.fillStyle='white';
+canvasContext.fillRect(x - 10,395,5,2)
+canvasContext.fillStyle='white';
+canvasContext.fillRect(x - 10,405,5,2)
+
+canvasContext.fillStyle='white';
+canvasContext.beginPath();
+canvasContext.arc(q,v,radius,0,Math.PI,true);
+canvasContext.fill();
+
+canvasContext.fillStyle='white';
+canvasContext.fillRect(q- 5,v,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(q + 4,v,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(q + 8,v,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(q,v,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(q-10,v,2,12);
+
+canvasContext.fillStyle='white';
+canvasContext.beginPath();
+canvasContext.arc(a1,b1,radius,0,Math.PI,true);
+canvasContext.fill();
+
+canvasContext.fillStyle='white';
+canvasContext.fillRect(a1- 5,b1,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(a1 + 4,b1,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(a1 + 8,b1,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(a1,b1,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(a1-10,b1,2,12);
+
+
+canvasContext.fillStyle='white';
+canvasContext.beginPath();
+canvasContext.arc(aa,bb,radius,0,Math.PI,true);
+canvasContext.fill();
+
+canvasContext.fillStyle='white';
+canvasContext.fillRect(aa- 5,bb,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(aa + 4,bb,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(aa + 8,bb,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(aa,bb,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(aa-10,bb,2,12);
+
+
+canvasContext.fillStyle='white';
+canvasContext.beginPath();
+canvasContext.arc(a,b,radius,0,Math.PI,true);
+canvasContext.fill();
+
+
+canvasContext.fillStyle='white';
+canvasContext.fillRect(a- 5,b,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(a + 4,b,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(a + 8,b,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(a,b,2,12);
+canvasContext.fillStyle='white';
+canvasContext.fillRect(a-10,b,2,12);
+
+canvasContext.fillStyle='white';
+canvasContext.fillText('Score '+ playerScore, 10, 10);
+canvasContext.fillStyle='white';
+canvasContext.fillText('High Score '+ highScore,330,10);
+canvasContext.fillStyle='white';
+canvasContext.fillText('Your Score '+ yourScore,180,10);
+}}}
+</script>
+
+   </body>
+   </html>
